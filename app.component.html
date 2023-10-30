@@ -1,0 +1,15 @@
+<h1>{{ title }} app is running</h1>
+<input type="text" [(ngModel)]="note" placeholder="Enter a note" />
+<button (click)="addNote()">Add Note</button>
+<input type="text" [(ngModel)]="searchPhrase" placeholder="Search for notes" />
+<button (click)="searchNotes()">Search</button>
+<button (click)="toggleNotesVisibility()">{{ showNotes ? 'Toggle Notes' : 'Show Notes' }}</button>
+<ul *ngIf="showNotes">
+  <li *ngFor="let note of filteredNotes; let i = index" class="note-item" (mouseenter)="showButtons(i)" (mouseleave)="hideButtons(i)">
+    <span [style.color]="note.color" *ngIf="editingIndex !== i">{{ note.text }}</span>
+    <input type="text" [(ngModel)]="filteredNotes[i].text" *ngIf="editingIndex === i" />
+    <button class="edit-button" (click)="editNote(i)" *ngIf="showEdit[i] && editingIndex !== i">Edit</button>
+    <button class="save-button" (click)="saveEdit(i)" *ngIf="editingIndex === i">Save</button>
+    <button class="delete-button" (click)="deleteNote(i)" *ngIf="showDelete[i]">X</button>
+  </li>
+</ul>
